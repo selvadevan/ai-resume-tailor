@@ -1,0 +1,40 @@
+Senior Data Scientist - AI/ML Team
+Tech Innovations Inc. | San Francisco, CA | Full-time
+
+About the Role:
+We are seeking a Senior Data Scientist to join our cutting-edge AI/ML team. You will work on large-scale machine learning projects, develop predictive models, and drive data-driven decision making across the organization.
+
+Key Responsibilities:
+• Design and implement machine learning models for business applications
+• Analyze large datasets to extract actionable insights
+• Collaborate with cross-functional teams including engineering and product
+• Present findings and recommendations to senior leadership
+• Mentor junior data scientists and contribute to team knowledge sharing
+
+Required Skills:
+• Master's or PhD in Computer Science, Statistics, Mathematics, or related field
+• 5+ years of experience in data science and machine learning
+• Expert-level proficiency in Python and SQL
+• Experience with machine learning frameworks: TensorFlow, PyTorch, scikit-learn
+• Strong knowledge of statistical analysis and hypothesis testing
+• Experience with big data technologies: Spark, Hadoop, or similar
+• Excellent communication and presentation skills
+
+Preferred Qualifications:
+• Experience with deep learning and neural networks
+• Knowledge of cloud platforms (AWS, GCP, Azure)
+• Experience with MLOps and model deployment
+• Publications in top-tier ML/AI conferences
+• Experience with A/B testing and experimental design
+
+What We Offer:
+• Competitive salary: $150,000 - $220,000
+• Comprehensive health, dental, and vision insurance
+• Flexible work arrangements (hybrid/remote options)
+• Professional development budget of $5,000 annually
+• Stock options and performance-based bonuses
+• Collaborative and innovative work environment
+
+To Apply:
+Please submit your resume, cover letter, and any relevant portfolio work.
+Contact: careers@techinnovations.com
