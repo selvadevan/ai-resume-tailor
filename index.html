@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 AI Resume Tailoring System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>🚀 AI Resume Tailoring System</h1>
+            <p>Transform your resume to match any job description using advanced AI</p>
+        </header>
+
+        <!-- Main Layout -->
+        <div class="main-layout">
+            <!-- Sidebar Navigation -->
+            <aside class="sidebar">
+                <nav class="nav-menu">
+                    <button class="nav-btn active" data-tab="single">
+                        📄 Single Process
+                    </button>
+                    <button class="nav-btn" data-tab="batch">
+                        📁 Batch Process
+                    </button>
+                    <button class="nav-btn" data-tab="settings">
+                        ⚙️ Settings
+                    </button>
+                    <button class="nav-btn" data-tab="history">
+                        📊 History
+                    </button>
+                </nav>
+
+                <!-- API Configuration -->
+                <div class="api-config card">
+                    <h3>🔑 API Configuration</h3>
+                    <div class="form-group">
+                        <label class="form-label">Groq API Key</label>
+                        <input type="password" id="apiKey" class="form-control" placeholder="Enter your Groq API key">
+                        <small class="help-text">Required for AI processing</small>
+                    </div>
+                    <div class="status-indicator">
+                        <span class="status status--error" id="apiStatus">API Key Required</span>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Content Area -->
+            <main class="content">
+                <!-- Single Process Tab -->
+                <div class="tab-content active" id="single-tab">
+                    <div class="upload-section">
+                        <div class="upload-grid">
+                            <!-- CV Upload -->
+                            <div class="upload-card card">
+                                <div class="card__body">
+                                    <h3>📄 Upload Resume/CV</h3>
+                                    <div class="file-upload" id="cvUpload">
+                                        <div class="upload-zone" id="cvUploadZone">
+                                            <div class="upload-icon">📄</div>
+                                            <p>Drop your resume here or click to browse</p>
+                                            <small>Supports PDF, DOCX, DOC (max 10MB)</small>
+                                            <input type="file" id="cvFile" accept=".pdf,.docx,.doc" hidden>
+                                        </div>
+                                        <div class="file-info hidden" id="cvFileInfo">
+                                            <span class="file-name"></span>
+                                            <button class="btn btn--sm" onclick="clearFile('cv')">Remove</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Job Description Upload -->
+                            <div class="upload-card card">
+                                <div class="card__body">
+                                    <h3>💼 Job Description</h3>
+                                    <div class="upload-tabs">
+                                        <button class="tab-btn active" data-upload-tab="file">Upload File</button>
+                                        <button class="tab-btn" data-upload-tab="text">Paste Text</button>
+                                    </div>
+                                    
+                                    <div class="upload-tab-content active" id="file-upload">
+                                        <div class="file-upload" id="jobUpload">
+                                            <div class="upload-zone" id="jobUploadZone">
+                                                <div class="upload-icon">💼</div>
+                                                <p>Drop job description here or click to browse</p>
+                                                <small>Supports TXT, MD (max 10MB)</small>
+                                                <input type="file" id="jobFile" accept=".txt,.md" hidden>
+                                            </div>
+                                            <div class="file-info hidden" id="jobFileInfo">
+                                                <span class="file-name"></span>
+                                                <button class="btn btn--sm" onclick="clearFile('job')">Remove</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="upload-tab-content" id="text-upload">
+                                        <textarea id="jobText" class="form-control" rows="8" placeholder="Paste the job description here..."></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Processing Button -->
+                        <div class="action-section">
+                            <button class="btn btn--primary btn--lg" id="processingBtn" onclick="startProcessing()">
+                                🚀 Tailor Resume
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Progress Section -->
+                    <div class="progress-section hidden" id="progressSection">
+                        <h3>Processing Pipeline</h3>
+                        <div class="progress-steps">
+                            <div class="progress-step" data-step="1">
+                                <div class="step-icon">📋</div>
+                                <div class="step-content">
+                                    <h4>Validating input files</h4>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-step" data-step="2">
+                                <div class="step-icon">🔍</div>
+                                <div class="step-content">
+                                    <h4>Extracting data from CV</h4>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-step" data-step="3">
+                                <div class="step-icon">📊</div>  
+                                <div class="step-content">
+                                    <h4>Analyzing job description</h4>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-step" data-step="4">
+                                <div class="step-icon">🤖</div>
+                                <div class="step-content">
+                                    <h4>Tailoring resume with AI</h4>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-step" data-step="5">
+                                <div class="step-icon">📄</div>
+                                <div class="step-content">
+                                    <h4>Creating output file</h4>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Results Section -->
+                    <div class="results-section hidden" id="resultsSection">
+                        <h3>✅ Processing Complete</h3>
+                        
+                        <!-- Extracted Data -->
+                        <div class="result-card card">
+                            <div class="card__body">
+                                <h4>📋 Extracted Resume Data</h4>
+                                <div class="expandable-section">
+                                    <button class="expand-btn" onclick="toggleSection('extractedData')">
+                                        View Extracted Data ▼
+                                    </button>
+                                    <div class="expanded-content hidden" id="extractedData">
+                                        <div class="data-preview">
+                                            <div class="data-section">
+                                                <h5>Personal Details</h5>
+                                                <div class="data-content" id="personalDetails">
+                                                    <!-- Data will be populated by JavaScript -->
+                                                </div>
+                                            </div>
+                                            <div class="data-section">
+                                                <h5>Skills</h5>
+                                                <div class="data-content" id="skillsData">
+                                                    <!-- Data will be populated by JavaScript -->
+                                                </div>
+                                            </div>
+                                            <div class="data-section">
+                                                <h5>Experience</h5>
+                                                <div class="data-content" id="experienceData">
+                                                    <!-- Data will be populated by JavaScript -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Job Analysis -->
+                        <div class="result-card card">
+                            <div class="card__body">
+                                <h4>💼 Job Description Analysis</h4>
+                                <div class="expandable-section">
+                                    <button class="expand-btn" onclick="toggleSection('jobAnalysis')">
+                                        View Job Analysis ▼
+                                    </button>
+                                    <div class="expanded-content hidden" id="jobAnalysis">
+                                        <div class="job-preview" id="jobPreview">
+                                            <!-- Job analysis will be populated by JavaScript -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tailored Resume -->
+                        <div class="result-card card">
+                            <div class="card__body">
+                                <h4>🎯 Tailored Resume</h4>
+                                <div class="comparison-view">
+                                    <div class="before-after">
+                                        <div class="comparison-section">
+                                            <h5>Key Changes Made</h5>
+                                            <ul id="changesList">
+                                                <!-- Changes will be populated by JavaScript -->
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Download Options -->
+                                <div class="download-section">
+                                    <h5>📥 Download Tailored Resume</h5>
+                                    <div class="download-buttons">
+                                        <button class="btn btn--primary" onclick="downloadResume('docx')">
+                                            📄 Download DOCX
+                                        </button>
+                                        <button class="btn btn--secondary" onclick="downloadResume('pdf')">
+                                            📄 Download PDF
+                                        </button>
+                                    </div>
+                                    <div class="file-stats">
+                                        <small>Generated file size: <span id="fileSize">~150 KB</span></small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Batch Process Tab -->
+                <div class="tab-content" id="batch-tab">
+                    <h2>📁 Batch Processing</h2>
+                    <div class="batch-upload">
+                        <div class="upload-grid">
+                            <div class="card">
+                                <div class="card__body">
+                                    <h3>📄 Upload Multiple CVs</h3>
+                                    <div class="file-upload">
+                                        <div class="upload-zone" onclick="document.getElementById('batchCvFiles').click()">
+                                            <div class="upload-icon">📄</div>
+                                            <p>Select multiple resume files</p>
+                                            <input type="file" id="batchCvFiles" multiple accept=".pdf,.docx,.doc" hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card__body">
+                                    <h3>💼 Upload Job Descriptions</h3>
+                                    <div class="file-upload">
+                                        <div class="upload-zone" onclick="document.getElementById('batchJobFiles').click()">
+                                            <div class="upload-icon">💼</div>
+                                            <p>Select multiple job description files</p>
+                                            <input type="file" id="batchJobFiles" multiple accept=".txt,.md" hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="action-section">
+                            <button class="btn btn--primary btn--lg" onclick="startBatchProcessing()">
+                                🚀 Start Batch Processing
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Tab -->
+                <div class="tab-content" id="settings-tab">
+                    <h2>⚙️ Settings</h2>
+                    <div class="settings-grid">
+                        <div class="card">
+                            <div class="card__body">
+                                <h3>Output Preferences</h3>
+                                <div class="form-group">
+                                    <label class="form-label">Default Output Format</label>
+                                    <select class="form-control" id="outputFormat">
+                                        <option value="docx">DOCX</option>
+                                        <option value="pdf">PDF</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Resume Style</label>
+                                    <select class="form-control" id="resumeStyle">
+                                        <option value="professional">Professional</option>
+                                        <option value="modern">Modern</option>
+                                        <option value="creative">Creative</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card__body">
+                                <h3>AI Model Settings</h3>
+                                <div class="form-group">
+                                    <label class="form-label">Extraction Model</label>
+                                    <select class="form-control" id="extractionModel">
+                                        <option value="openai/gpt-oss-20b">GPT-OSS-20B</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Generation Model</label>
+                                    <select class="form-control" id="generationModel">
+                                        <option value="qwen-3-32b">Qwen-3-32B</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- History Tab -->
+                <div class="tab-content" id="history-tab">
+                    <h2>📊 Processing History</h2>
+                    <div class="history-list" id="historyList">
+                        <div class="card">
+                            <div class="card__body">
+                                <p>No processing history available yet. Start tailoring resumes to see your history here.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Loading Modal -->
+    <div class="modal hidden" id="loadingModal">
+        <div class="modal-content">
+            <div class="loading-spinner"></div>
+            <h3>Processing your request...</h3>
+            <p id="loadingMessage">Please wait while we process your files.</p>
+        </div>
+    </div>
+
+    <!-- Error Modal -->
+    <div class="modal hidden" id="errorModal">
+        <div class="modal-content">
+            <h3>❌ Error</h3>
+            <p id="errorMessage"></p>
+            <button class="btn btn--primary" onclick="closeModal('errorModal')">Close</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
